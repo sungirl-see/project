@@ -53,12 +53,31 @@ module.exports={
 			template:'./index.html'
 		}),
 		new CleanWebpackPlugin(),
+		// new webpack.optimize.CommonsChunkPlugin('common.js'),
+		new webpack.ProvidePlugin({
+			jQuery:'jquery',
+			$:'jquery',
+			'windows.jQuery':'jquery',
+			Popper:['popper.js','default']
+		})
 	],
+	optimization: {
+	  splitChunks: {
+	    cacheGroups: {
+	      commons: {
+	        name: 'commons',
+	        chunks: 'initial',
+	        minChunks: 2
+	      }
+	    }
+	  }
+	},
 	resolve:{
 		alias:{
 			'vue':'vue/dist/vue.js',
 			'@':path.resolve(__dirname,'../src'),
-			'css':path.resolve(__dirname,'../src/assets/css')
+			'css':path.resolve(__dirname,'../src/assets/css'),
+			'jquery':'jQuery/src/jquery'
 		}
 	}
 }
